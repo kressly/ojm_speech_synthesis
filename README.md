@@ -3,28 +3,25 @@ Cross browsers speech synthesis for javascript that works on mobile and desktop 
 
 Just copy these and change it. u face challenges, contact me 
 
-
- <button id="speak-btn">Click to Speak</button>
+<button id="speak-btn">Click to Speak</button>
 
 <script>
     var lang_abbreviation = 'en';
     var maxPhraseLength = 200; // Set the maximum length for each phrase
 
-    function ojm_speech_synthesis(message) 
-	{
-		//On applique le mem synthesis pour les chromes browsers.
-    	const isChromium = /Chrome|Chromium/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+    function ojm_speech_synthesis_play(message) 
+    {
+        const isChromium = /Chrome|Chromium/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
-		if (isChromium) 
-		{
-			ojm_speack_now(message);
-		} 
-		else 
-		{
-			speak_fallback(message);
-		}
-	}
-
+        if (isChromium) 
+        {
+            ojm_speack_now(message);
+        } 
+        else 
+        {
+            speak_fallback(message);
+        }
+    }
 
     function ojm_speack_now(text) 
     {
@@ -32,7 +29,7 @@ Just copy these and change it. u face challenges, contact me
         {
             window.speechSynthesis.cancel();
             
-            // Dummy phrase to initialize Google voices je met un point
+            // Dummy phrase to initialize Google voices
             const dummyUtterance = new SpeechSynthesisUtterance('.');
             dummyUtterance.lang = lang_abbreviation === 'fr' ? 'fr-FR' : 'en-GB';
             window.speechSynthesis.speak(dummyUtterance);
@@ -61,6 +58,9 @@ Just copy these and change it. u face challenges, contact me
                     } 
                     else 
                     {
+                        // Log available voices
+                        console.log("Available voices:", voices);
+
                         const selectedVoice = voices.find(voice => 
                             voice.name.includes('Google US English') || 
                             voice.name.includes('Google UK English') || 
@@ -153,6 +153,7 @@ Just copy these and change it. u face challenges, contact me
         ojm_speech_synthesis_play(message);
     });
 </script>
+
 
 
 <button id="pause-btn">Pause/Resume</button>
